@@ -1,4 +1,4 @@
-import { FC, useState } from 'react'
+import { FC, useRef, useState } from 'react'
 import { useEffect } from 'react'
 import { clsx } from 'clsx'
 // import Loading from '../../components/Loading/Loading'
@@ -7,10 +7,15 @@ import { useOrderPrice } from '../../hooks/useOrderPrice'
 import { usePaperSize } from '../../hooks/usePaperSize'
 
 import './price-table.css'
+import Button from '../../components/Button/Button'
+
+const LIMIT_PAGE = 5
 
 const PriceTable: FC = () => {
   const { paperSize } = usePaperSize()
   const { orderPrice, setOrderPrice } = useOrderPrice()
+  const tempQuanitiesPrice = useRef<number[][]>()
+  const [seeMore, setSeeMore] = useState(false)
   const [loading, setLoading] = useState(false)
   const [businessDays, setBusinessDays] = useState<number[]>([])
   const [quanitiesPrice, setQuantitiesPrice] = useState<number[][]>([])
@@ -41,8 +46,22 @@ const PriceTable: FC = () => {
     getData();
   }, [paperSize])
 
-  const onSelectPrice = (price: number) => {
-    setOrderPrice?.(price)
+  useEffect(() => {
+    if (!seeMore) {
+      tempQuanitiesPrice.current = [...quanitiesPrice]
+      setQuantitiesPrice(quanitiesPrice.slice(0, LIMIT_PAGE))
+    } else {
+      if (tempQuanitiesPrice.current && tempQuanitiesPrice.current.length > 0) {
+        setQuantitiesPrice(tempQuanitiesPrice.current)
+        tempQuanitiesPrice.current = []
+      }
+    }
+  }, [loading, seeMore])
+
+  const onSelectPrice = (idx: number, price: number) => {
+    if (idx !== 0) {
+      setOrderPrice?.(price)
+    }
   }
 
   return (
@@ -57,21 +76,28 @@ const PriceTable: FC = () => {
               <tr>
                 <th></th>
                 {
-                  businessDays.map((day) => <th>{day}</th>)
+                  businessDays.map((day) => <th key={day}>{day}</th>)
                 }            
               </tr>
               {
-                quanitiesPrice.map((rows) => (
-                  <tr className='price-cell'>
-                    {
-                      rows.map((price) => <td className={clsx((orderPrice === price) && 'highlighted')} onClick={() => onSelectPrice(price)}>{price}</td>)
-                    }
-                  </tr>
-                ))
+                quanitiesPrice.map((rows) => {
+                  return (
+                    <tr key={Math.random()} className='price-cell'>
+                      {
+                        rows.map((price, idx) => <td key={price} className={clsx((orderPrice === price) && (idx !== 0) && 'highlighted')} onClick={() => onSelectPrice(idx, price)}>{price}</td>)
+                      }
+                    </tr>
+                  )
+                })
               }
             </table>
           )
         }
+      </div>
+      <div className="see-more-btn">
+        <Button onClick={() => setSeeMore(true)}>
+          See more
+        </Button>
       </div>
     </div>
   )

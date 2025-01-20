@@ -4,13 +4,16 @@ import Button from '../../components/Button/Button'
 import { usePaperSize } from '../../hooks/usePaperSize'
 import { type PaperSizeType } from '../../api/type'
 import './paper-size.css'
+import { useOrderPrice } from '../../hooks/useOrderPrice'
 
 const PaperSize: FC = () => {
   const { setPaperSize } = usePaperSize()
+  const { setOrderPrice } = useOrderPrice()
   const [tempPaperSize, setTempPaperSize] = useState<PaperSizeType>("A4")
 
   const onApplyPaperSize = () => {
     setPaperSize?.(tempPaperSize)
+    setOrderPrice?.(0)
   }
   return (
     <div className="paper-size">
