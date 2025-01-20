@@ -1,7 +1,6 @@
 import { FC, useRef, useState } from 'react'
 import { useEffect } from 'react'
 import { clsx } from 'clsx'
-// import Loading from '../../components/Loading/Loading'
 import apiService from '../../api/apiService'
 import { useOrderPrice } from '../../hooks/useOrderPrice'
 import { usePaperSize } from '../../hooks/usePaperSize'
@@ -19,6 +18,10 @@ const PriceTable: FC = () => {
   const [loading, setLoading] = useState(false)
   const [businessDays, setBusinessDays] = useState<number[]>([])
   const [quanitiesPrice, setQuantitiesPrice] = useState<number[][]>([])
+
+  const [hoverPrice, setHoverPrice] = useState(0)
+  const [row, setRow] = useState<number>()
+  const [column, setColumn] = useState<number>()
   
   useEffect(() => {
     const getData = async () => {
@@ -64,12 +67,18 @@ const PriceTable: FC = () => {
     }
   }
 
+  const onHoverCell = (row: number, column: number, price: number) => {
+    setRow(row)
+    setColumn(column)
+    setHoverPrice(price)
+  }
+
   return (
     <div className="price-table">
       <div className="label">
         Price Table
       </div>
-      <div className="content">
+      <div className="content" onMouseOut={() => {setRow(undefined); setColumn(undefined); setHoverPrice(0)}}>
         {
           loading ? 'Loading...' : (
             <table>
@@ -80,11 +89,19 @@ const PriceTable: FC = () => {
                 }            
               </tr>
               {
-                quanitiesPrice.map((rows) => {
+                quanitiesPrice.map((rows, rowIdx) => {
                   return (
                     <tr key={Math.random()} className='price-cell'>
                       {
-                        rows.map((price, idx) => <td key={price} className={clsx((orderPrice === price) && (idx !== 0) && 'highlighted')} onClick={() => onSelectPrice(idx, price)}>{price}</td>)
+                        rows.map((price, idx) => <td key={price} 
+                                                    onMouseOver={() => onHoverCell(rowIdx, idx, price)} 
+                                                    className={clsx(
+                                                      (rowIdx === row || idx === column) && (idx !== 0) && 'weak-highlighted',
+                                                      (orderPrice === price || hoverPrice === price) && (idx !== 0) && 'highlighted',
+                                                    )} 
+                                                    onClick={() => onSelectPrice(idx, price)}>
+                                                      {price}
+                                                  </td>)
                       }
                     </tr>
                   )

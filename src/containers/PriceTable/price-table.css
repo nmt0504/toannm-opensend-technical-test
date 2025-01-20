@@ -35,6 +35,11 @@ tr {
   cursor: pointer;
 }
 
+.weak-highlighted {
+  background-color: #e5e5e5;
+  color: black;
+}
+
 .highlighted {
   background-color: #7f7f7f;
   color: white;
