@@ -1,0 +1,21 @@
+.paper-size {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 30%;
+  padding: 25px;
+  background-color: #dfdfdf;
+  justify-content: space-between;
+}
+
+.paper-size .title {
+  text-align: left;
+}
+
+.paper-size .select-paper-size {
+  margin-top: 40px;
+}
+
+.paper-size .apply-btn {
+  text-align: right; 
+}

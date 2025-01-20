@@ -1,0 +1,32 @@
+.price-table {
+  display: flex;
+  width: 70%;
+  padding: 25px;
+  gap: 20px;
+  flex-direction: column;
+  background-color: #dfdfdf;
+}
+
+.price-table .label {
+  text-align: left;
+}
+
+.price-table .content {
+  min-height: 200px;
+}
+
+table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+td, th {
+  border: 1px solid #bababa;
+  text-align: left;
+  padding: 8px;
+}
+
+tr {
+  background-color: #fff;
+}

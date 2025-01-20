@@ -1,0 +1,17 @@
+.action-panel {
+  display: flex;
+  background-color: #dfdfdf;
+  margin-top: 20px;
+  padding: 25px;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.action-panel .add-to-cart {
+  text-align: right;
+}
+
+.action-panel .order-price {
+  display: flex;
+  align-self: center;
+}
