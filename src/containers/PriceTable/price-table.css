@@ -30,3 +30,12 @@ td, th {
 tr {
   background-color: #fff;
 }
+
+.price-cell {
+  cursor: pointer;
+}
+
+.highlighted {
+  background-color: #7f7f7f;
+  color: white;
+}

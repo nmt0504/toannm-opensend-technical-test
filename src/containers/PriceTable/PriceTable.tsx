@@ -1,14 +1,16 @@
 import { FC, useState } from 'react'
 import { useEffect } from 'react'
+import { clsx } from 'clsx'
 // import Loading from '../../components/Loading/Loading'
 import apiService from '../../api/apiService'
-import { type paperSizeType } from '../../api/type'
+import { useOrderPrice } from '../../hooks/useOrderPrice'
+import { usePaperSize } from '../../hooks/usePaperSize'
 
 import './price-table.css'
 
-const PriceTable: FC<{
-  paperSize: paperSizeType
-}> = ({ paperSize }) => {
+const PriceTable: FC = () => {
+  const { paperSize } = usePaperSize()
+  const { orderPrice, setOrderPrice } = useOrderPrice()
   const [loading, setLoading] = useState(false)
   const [businessDays, setBusinessDays] = useState<number[]>([])
   const [quanitiesPrice, setQuantitiesPrice] = useState<number[][]>([])
@@ -39,6 +41,10 @@ const PriceTable: FC<{
     getData();
   }, [paperSize])
 
+  const onSelectPrice = (price: number) => {
+    setOrderPrice?.(price)
+  }
+
   return (
     <div className="price-table">
       <div className="label">
@@ -56,9 +62,9 @@ const PriceTable: FC<{
               </tr>
               {
                 quanitiesPrice.map((rows) => (
-                  <tr>
+                  <tr className='price-cell'>
                     {
-                      rows.map((item) => <td>{item}</td>)
+                      rows.map((price) => <td className={clsx((orderPrice === price) && 'highlighted')} onClick={() => onSelectPrice(price)}>{price}</td>)
                     }
                   </tr>
                 ))

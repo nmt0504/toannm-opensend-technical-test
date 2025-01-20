@@ -1,16 +1,16 @@
 import { FC, useState } from 'react'
 import Dropdown from '../../components/Dropdown/Dropdown'
 import Button from '../../components/Button/Button'
-import { type paperSizeType } from '../../api/type'
+import { usePaperSize } from '../../hooks/usePaperSize'
+import { type PaperSizeType } from '../../api/type'
 import './paper-size.css'
 
-const PaperSize: FC<{
-  setPaperSize: (value: paperSizeType) => void
-}> = ({ setPaperSize }) => {
-  const [tempPaperSize, setTempPaperSize] = useState<paperSizeType>("A4")
+const PaperSize: FC = () => {
+  const { setPaperSize } = usePaperSize()
+  const [tempPaperSize, setTempPaperSize] = useState<PaperSizeType>("A4")
 
   const onApplyPaperSize = () => {
-    setPaperSize(tempPaperSize)
+    setPaperSize?.(tempPaperSize)
   }
   return (
     <div className="paper-size">
