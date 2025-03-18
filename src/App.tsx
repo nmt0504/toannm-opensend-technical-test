@@ -1,21 +1,17 @@
-import ActionPanel from './containers/ActionPanel/ActionPanel'
-import PaperSize from './containers/PaperSize/PaperSize'
-import PriceTable from './containers/PriceTable/PriceTable'
-import { AppProvider } from './context/AppContext'
-import './App.css'
+import { Route, Routes } from 'react-router-dom';
+
+import LoginPage from '@/containers/LoginPage';
+
+import { AppProvider } from './context/AppContext';
 
 function App() {
   return (
     <AppProvider>
-      <div className="content-wrapper">
-        <PaperSize />
-        <PriceTable />
-      </div>
-      <div className="panel">
-        <ActionPanel />
-      </div>
+      <Routes>
+        <Route path="/" element={<LoginPage />} />
+      </Routes>
     </AppProvider>
-  )
+  );
 }
 
-export default App
+export default App;
