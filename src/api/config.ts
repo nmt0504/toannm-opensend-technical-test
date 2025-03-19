@@ -1,1 +1,1 @@
-export const BASE_URL = 'https://us-central1-fe-ws-test.cloudfunctions.net';
+export const BASE_URL = 'https://stgapp-bwgkn3md.opensend.com';

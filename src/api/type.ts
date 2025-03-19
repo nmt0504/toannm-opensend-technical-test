@@ -1,1 +1,0 @@
-export type PaperSizeType = "A4" | "A5" | "B4" | "B5" | "B6"

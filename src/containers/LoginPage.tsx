@@ -1,4 +1,5 @@
 import { Eye, EyeOff, Loader2 } from 'lucide-react';
+import { LockKeyhole, Mail } from 'lucide-react';
 import type React from 'react';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -93,8 +94,14 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-background p-4">
-      <Card className="w-full max-w-md shadow-lg">
+    <div className="flex flex-col justify-center gap-4 min-h-screen items-center bg-background bg-system-gray-2 p-4">
+      <div>
+        <img
+          src="https://s.opensend.com/opensend/assets/881b6e7edacf6fc7c9b829023ba7e4d1/logo_with_text.svg"
+          alt="opensend logo"
+        />
+      </div>
+      <Card className="w-full p-12 lg:min-w-[480px] max-w-md shadow-lg">
         <CardHeader className="space-y-1">
           <CardTitle className="text-2xl font-bold text-center">Welcome back!</CardTitle>
           <CardDescription className="text-center">
@@ -114,6 +121,7 @@ export default function LoginPage() {
                 disabled={isLoading}
                 aria-invalid={!!errors.email}
                 className={errors.email ? 'border-destructive' : ''}
+                startIcon={Mail}
               />
               {errors.email && <p className="text-sm text-destructive">{errors.email}</p>}
             </div>
@@ -129,6 +137,7 @@ export default function LoginPage() {
                   disabled={isLoading}
                   aria-invalid={!!errors.password}
                   className={errors.password ? 'border-destructive pr-10' : 'pr-10'}
+                  startIcon={LockKeyhole}
                 />
                 <Button
                   type="button"
