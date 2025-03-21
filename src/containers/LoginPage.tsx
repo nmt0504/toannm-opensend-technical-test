@@ -15,6 +15,8 @@ import {
 } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 
+import { usePostAuthentication } from '@/hooks/usePostAuthentication';
+
 export default function LoginPage() {
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
@@ -82,7 +84,9 @@ export default function LoginPage() {
 
     // Simulate API call
     try {
-      await new Promise(resolve => setTimeout(resolve, 1500));
+      const { mutateAsync: postAssetsByReportingYear, isLoading: postLoading } =
+        usePostAuthentication({ onSuccess: () =>       navigate('/dashboard');
+(routes.organization.vehicles.root) });
 
       // On successful login, redirect to dashboard
       navigate('/dashboard');
